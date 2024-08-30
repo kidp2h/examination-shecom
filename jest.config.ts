@@ -18,6 +18,7 @@ const config: Config = {
   coverageDirectory: 'coverage',
 
   coverageProvider: 'v8',
+  coveragePathIgnorePatterns: ['node_modules', 'lib'],
 };
 
 export default createJestConfig(config);
