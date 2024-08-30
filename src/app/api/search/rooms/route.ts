@@ -1,4 +1,4 @@
-'use server';
+export const dynamic = 'force-dynamic';
 import prisma from '@/lib/prisma';
 import { response, throwError } from '@/lib/utils';
 import { type NextRequest } from 'next/server';
