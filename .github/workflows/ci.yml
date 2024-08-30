@@ -68,5 +68,7 @@ jobs:
       - name: Sleep for 10 seconds wait for containers
         run: sleep 10s
         shell: bash
+      - name: Push db
+        run: pnpm prisma generate && pnpm prisma db push
       - name: Run tests
         run: pnpm test
