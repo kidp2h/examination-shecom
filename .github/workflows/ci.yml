@@ -64,7 +64,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run containers
-        run: docker-compose --env-file .env up -d
+        run: docker compose --env-file .env up -d
       - name: Sleep for 10 seconds wait for containers
         run: sleep 10s
         shell: bash
