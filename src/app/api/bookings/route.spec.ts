@@ -5,6 +5,7 @@ import { POST as createRoom } from '../rooms/route';
 import { GET, POST } from './route';
 
 describe('route', () => {
+  const mockRequest = {} as any;
   const room = {
     id: faker.string.uuid(),
     name: faker.company.name(),
@@ -28,9 +29,9 @@ describe('route', () => {
     expect(response.status).toBe(200);
   });
   it('POST /api/bookings - should return 200 ', async () => {
-    const newRoom = await createRoom(room);
+    const newRoom = await createRoom(mockRequest, room);
 
-    const response = await POST(booking);
+    const response = await POST(mockRequest, booking);
     const body = await response.json();
 
     expect(response.status).toBe(200);

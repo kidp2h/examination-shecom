@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import { response, throwError } from '@/lib/utils';
 import { Booking } from '@prisma/client';
+import { NextRequest } from 'next/server';
 export async function GET() {
   try {
     const bookings = await prisma.booking.findMany();
@@ -12,7 +13,7 @@ export async function GET() {
   }
 }
 
-export async function POST(booking: Booking) {
+export async function POST(request: NextRequest, booking: Booking) {
   try {
     const newBooking = await prisma.booking.create({
       data: booking,

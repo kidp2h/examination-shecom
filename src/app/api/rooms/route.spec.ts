@@ -12,13 +12,15 @@ describe('route', () => {
     location: faker.location.street(),
     image_url: faker.image.url(),
   } as Room;
+
+  const mockRequest = {} as any;
   it('GET /api/rooms - should return 200 ', async () => {
     const response = await GET();
 
     expect(response.status).toBe(200);
   });
   it('POST /api/rooms - should return 200', async () => {
-    const response = await POST(room);
+    const response = await POST(mockRequest, room);
     const body = await response.json();
 
     expect(response.status).toBe(200);
