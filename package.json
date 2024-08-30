@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --passWithNoTests",
-    "test:watch": "jest --watch --passWithNoTests"
+    "test": "dotenv -e .env.test -- jest --passWithNoTests --detectOpenHandles --forceExit",
+    "test:watch": "dotenv -e .env.test -- jest --watch --passWithNoTests --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "@prisma/client": "^5.19.0",
@@ -45,6 +45,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/validator": "^13.12.1",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "jest": "^29.7.0",

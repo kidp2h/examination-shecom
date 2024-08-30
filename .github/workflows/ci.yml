@@ -59,7 +59,14 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
+      - name: Setup env
+        run: cp .env.example .env && cp .env.test.example .env.test
       - name: Install dependencies
         run: pnpm install
+      - name: Run containers
+        run: docker-compose --env-file .env up -d
+      - name: Sleep for 10 seconds wait for containers
+        run: sleep 10s
+        shell: bash
       - name: Run tests
         run: pnpm test
