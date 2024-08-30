@@ -1,5 +1,5 @@
+import '@/app/globals.css';
 import type { Metadata } from 'next';
-import './globals.css';
 
 import { Inter as FontSans } from 'next/font/google';
 const fontSans = FontSans({
@@ -9,10 +9,11 @@ const fontSans = FontSans({
 
 import { cn } from '@/lib/utils';
 
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Examination Shecom',
+  title: 'Booking',
 };
 
 export default function RootLayout({
@@ -36,6 +37,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
