@@ -71,4 +71,4 @@ jobs:
         run: sleep 10s
         shell: bash
       - name: Run tests
-        run: pnpm ci:test
+        run: pnpm test
