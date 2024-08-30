@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { Booking, Room, StatusBooking } from '@prisma/client';
+import { Room } from '@prisma/client';
 import '@testing-library/jest-dom';
+import validator from 'validator';
 import { POST as createRoom } from '../rooms/route';
 import { GET, POST } from './route';
 
 describe('route', () => {
-  const mockRequest = {} as any;
   const room = {
     id: faker.string.uuid(),
     name: faker.company.name(),
@@ -14,15 +14,20 @@ describe('route', () => {
     location: faker.location.street(),
     image_url: faker.image.url(),
   } as Room;
-  const booking = {
-    id: faker.string.uuid(),
-    room_id: room.id,
-    user_name: faker.internet.userName(),
-    check_in_date: faker.date.recent(),
-    check_out_date: faker.date.future(),
-    status: StatusBooking.BOOKED,
-  } as unknown as Booking;
 
+  const mockRequest = {
+    json: jest.fn().mockResolvedValue({
+      information: {
+        firstName: faker.internet.userName(),
+        lastName: faker.internet.userName(),
+        email: faker.internet.email(),
+        phone: faker.phone.number(),
+        checkIn: faker.date.soon().toISOString(),
+        checkOut: faker.date.future().toISOString(),
+      },
+      room,
+    }),
+  } as any;
   it('GET /api/bookings - should return 200', async () => {
     const response = await GET();
 
@@ -31,10 +36,10 @@ describe('route', () => {
   it('POST /api/bookings - should return 200 ', async () => {
     const newRoom = await createRoom(mockRequest, room);
 
-    const response = await POST(mockRequest, booking);
+    const response = await POST(mockRequest);
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body.data.id).toBe(booking.id);
+    expect(validator.isUUID(body.data.id)).toBe(true);
   });
 });

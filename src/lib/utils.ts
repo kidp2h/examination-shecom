@@ -5,7 +5,8 @@ import { twMerge } from 'tailwind-merge';
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-export function response(data: any, status = 200) {
+
+export function response<T>(data: T, status = 200) {
   return NextResponse.json(
     {
       data,
@@ -29,4 +30,12 @@ export function throwError(
       status,
     },
   );
+}
+
+export function checkDateISORange(checkIn: string, checkOut: string) {
+  if (!checkIn || !checkOut) return false;
+  const checkInDate = new Date(checkIn);
+  const checkOutDate = new Date(checkOut);
+
+  return !(checkInDate > checkOutDate);
 }

@@ -5,7 +5,6 @@ import { NextRequest } from 'next/server';
 export async function GET() {
   try {
     const rooms = await prisma.room.findMany();
-
     return response(rooms);
   } catch (error) {
     console.log(error);
