@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run build
-        run: cp .env.example .env && pnpm build
+        run: pnpm build
   test:
     runs-on: ubuntu-latest
     steps:

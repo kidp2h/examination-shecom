@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -e .env -- next dev",
-    "build": "prisma generate && next build",
+    "build": "cp .env.example .env && dotenv -e .env -- next build",
     "start": "next start",
     "lint": "next lint",
     "test": "dotenv -e .env.test -- prisma db push && dotenv -e .env.test -- jest --passWithNoTests --detectOpenHandles --forceExit",
