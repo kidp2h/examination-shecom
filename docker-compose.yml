@@ -4,10 +4,21 @@ services:
   db:
     image: postgres
     volumes: [data:/var/lib/postgresql/data]
+    command: -p $DATABASE_PORT
     environment:
-      POSTGRES_USER: local
-      POSTGRES_PASSWORD: local
-      POSTGRES_DB: local
-    ports: [5432:5432]
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+      POSTGRES_DB: $DATABASE_NAME
+    ports: [$DATABASE_PORT:$DATABASE_PORT]
+  db_test:
+    image: postgres
+    volumes: [data_test:/var/lib/postgresql/data]
+    command: -p $DATABASE_TEST_PORT
+    environment:
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+      POSTGRES_DB: $DATABASE_NAME
+    ports: [$DATABASE_TEST_PORT:$DATABASE_TEST_PORT]
 volumes:
   data:
+  data_test:

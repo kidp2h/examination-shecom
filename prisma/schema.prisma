@@ -12,3 +12,35 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Room {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  price       Int
+  location    String
+  image_url   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  bookings    Booking[]
+}
+
+model Booking {
+  id             String        @id @default(uuid())
+  room           Room          @relation(fields: [room_id], references: [id])
+  room_id        String
+  user_name      String
+  check_in_date  DateTime
+  check_out_date DateTime
+  status         StatusBooking
+  createdAt      DateTime      @default(now())
+  deletedAt      DateTime?
+  updatedAt      DateTime      @updatedAt
+}
+
+enum StatusBooking {
+  EMPTY
+  BOOKED
+}
+
