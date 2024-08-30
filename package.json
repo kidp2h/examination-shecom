@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "dotenv -e .env.test -- jest --passWithNoTests --detectOpenHandles --forceExit",
     "test:watch": "dotenv -e .env.test -- jest --watch --passWithNoTests --detectOpenHandles --forceExit",
-    "ci:test": "prisma db push && dotenv -e .env.test -- jest --passWithNoTests --detectOpenHandles --forceExit"
+    "ci:test": "dotenv -e .env.test -- prisma db push && dotenv -e .env.test -- jest --passWithNoTests --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "@prisma/client": "^5.19.0",
