@@ -1,36 +1,229 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Examination Shecom Co., Ltd
 
-## Getting Started
+## Description
 
-First, run the development server:
+- A simple and efficient room booking system designed to streamline the process of reserving rooms. This application allows users to view available rooms, make reservations, and manage their bookings with ease.
 
+### Features
+
+- User-friendly interface for browsing available rooms
+- Booking creation and cancellation
+- Admin dashboard for managing rooms and bookings
+- Check detail a room
+- Search room by address and date (check-in, check-out)
+
+
+## Installation
+### Local
+- Clone repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# With SSH
+git clone git@github.com:kidp2h/examination-shecom.git
+# With HTTPS
+git clone https://github.com/kidp2h/examination-shecom.git
+
+```
+- Setup environment variables
+```bash
+cp .env.example .env
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Setup database
+```bash
+# With Docker 
+docker-compose --env-file .env up -d
+# Without Docker
+# First option, using external service for database
+# Second option, setup local database with PostgreSQL
+```
+- Install packages & set up Prisma ORM
+```bash
+# Install packages
+pnpm install # (can use npm, pnpm to alternative)
+# Generate Prisma ORM
+pnpm prisma generate # (recommended)
+pnpx prisma generate # (not recommended)
+# Migrate database 
+pnpm prisma migrate dev
+pnpm prisma db push # (migrate directly by push db) - (all data should be cleared)
+# Create seed data (as neccessary or can insert manually) - (can skip this step, not affect with progress set up)
+node ./prisma/seed.js
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+- Build project
+```bash
+pnpm build # (recommended)
+next build # (not recommended)
+```
+- Start application
+```bash
+pnpm dev # (for development)
+pnpm start # (for production)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Unit test 
+```bash
+# First option, separate 2 DB, one for development and one for test
+cp .env.test.example .env.test
+pnpm test
+# Second option, using only 1 DB for test and development
+dotenv -e .env -- jest --passWithNoTests --detectOpenHandles --forceExit
+```
+## Structure Project
 
-## Learn More
+- `[*`].ts  - parameter on url
+- spec.ts - unit test
+- pages.ts - page for app
+- layout - layout for page or a group page
 
-To learn more about Next.js, take a look at the following resources:
+```
+--  .
+-- ├──  components.json 
+-- ├──  docker-compose.yml             - Docker Compose for DB container
+-- ├──  jest.config.ts                 - Config Jest
+-- ├──  next-env.d.ts
+-- ├──  next.config.mjs                - Config Next.JS
+-- ├──  package.json
+-- ├──  pnpm-lock.yaml
+-- ├──  postcss.config.mjs
+-- ├──  prisma                         - Config prisma, model, seed and migrate
+-- │  ├──  migrations
+-- │  │  ├──  20240830071259_init
+-- │  │  │  └──  migration.sql
+-- │  │  └──  migration_lock.toml
+-- │  ├──  schema.prisma
+-- │  └──  seed.js
+-- ├──  README.md
+-- ├──  src                            - Source code
+-- │  ├──  app                         - Main folder pages for entire applications
+-- │  │  ├──  (booking)                - Group pages without add segment on url (for user)
+-- │  │  │  ├──  detail
+-- │  │  │  │  └──  [id]               - parameter id on url for route
+-- │  │  │  │     └──  page.tsx
+-- │  │  │  ├──  layout.tsx
+-- │  │  │  ├──  page.tsx
+-- │  │  │  └──  payment
+-- │  │  │     └──  [id]
+-- │  │  │        └──  page.tsx
+-- │  │  ├──  api                      - API for applications
+-- │  │  │  ├──  bookings
+-- │  │  │  │  ├──  [id]
+-- │  │  │  │  │  ├──  route.spec.ts
+-- │  │  │  │  │  └──  route.ts
+-- │  │  │  │  ├──  route.spec.ts
+-- │  │  │  │  └──  route.ts
+-- │  │  │  ├──  rooms
+-- │  │  │  │  ├──  [id]
+-- │  │  │  │  │  ├──  route.spec.ts
+-- │  │  │  │  │  └──  route.ts
+-- │  │  │  │  ├──  route.spec.ts
+-- │  │  │  │  └──  route.ts
+-- │  │  │  └──  search
+-- │  │  │     └──  rooms
+-- │  │  │        └──  route.ts
+-- │  │  ├──  globals.css
+-- │  │  ├──  layout.tsx
+-- │  │  └──  management               - Group page management (have segment) for admin
+-- │  │     ├──  calendar
+-- │  │     │  └──  page.tsx
+-- │  │     ├──  dashboard
+-- │  │     │  └──  page.tsx
+-- │  │     └──  layout.tsx
+-- │  ├──  components                  - components for app
+-- │  │  ├──  ComboBox.tsx
+-- │  │  ├──  DatePicker.tsx
+-- │  │  ├──  DateRangePicker.tsx
+-- │  │  ├──  detail                   - components for detail page
+-- │  │  │  └──  DetailRoom.tsx
+-- │  │  ├──  Header.tsx
+-- │  │  ├── 󱂵 home                     - components for home (index) page
+-- │  │  │  ├──  ListRoom.tsx
+-- │  │  │  ├──  Search.tsx
+-- │  │  │  └──  SearchBar.tsx
+-- │  │  ├──  management               - components for group page management
+-- │  │  │  └──  TableBooking.tsx
+-- │  │  ├──  ModeToggle.tsx
+-- │  │  ├──  payment                  - components for payment page
+-- │  │  │  ├──  FormInformation.tsx
+-- │  │  │  └──  PaymentBooking.tsx
+-- │  │  ├──  ThemeProvider.tsx
+-- │  │  └──  ui                       - UI generate of ShaCDN
+-- │  │     ├──  badge.tsx
+-- │  │     ├──  breadcrumb.tsx
+-- │  │     ├──  button.tsx
+-- │  │     ├──  calendar.tsx
+-- │  │     ├──  card.tsx
+-- │  │     ├──  command.tsx
+-- │  │     ├──  dialog.tsx
+-- │  │     ├──  dropdown-menu.tsx
+-- │  │     ├──  form.tsx
+-- │  │     ├──  input.tsx
+-- │  │     ├──  label.tsx
+-- │  │     ├──  popover.tsx
+-- │  │     ├──  sheet.tsx
+-- │  │     ├──  table.tsx
+-- │  │     ├──  tabs.tsx
+-- │  │     ├──  toast.tsx
+-- │  │     ├──  toaster.tsx
+-- │  │     ├──  tooltip.tsx
+-- │  │     └──  use-toast.ts
+-- │  ├──  lib                         - Library and utils for app
+-- │  │  ├──  prisma.ts
+-- │  │  ├──  utils.ts
+-- │  │  └──  zod.ts
+-- │  ├──  services                    - Services communicate with APIs
+-- │  │  ├──  booking.ts
+-- │  │  ├──  index.ts
+-- │  │  └──  room.ts
+-- │  └──  types                       - Types for app
+-- │     └──  index.ts
+-- ├──  tailwind.config.ts
+-- └──  tsconfig.json
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API endpoints
+- GET    /api/rooms - Get list rooms (entire)
+- GET    /api/rooms/:id - Get specific room by id
+- POST   /api/bookings - Create new booking
+- GET    /api/bookings - Get bookings
+- DELETE /api/bookings/:id - Delete specific booking by id
+- GET    /api/search/rooms?location=XXXXX&check_in=XXXXXXX&check_out=XXXXXX - Search room
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Production version URL
+- https://shecom-examination.nthinhdev.site
 
-## Deploy on Vercel
+## Guide contribute
+- Fork repository
+- Clone repository from yours 
+```bash
+# With SSH
+git clone git@github.com:USERNAME/examination-shecom.git
+# With HTTPS
+git clone https://github.com/USERNAME/examination-shecom.git
+```
+- Add feature
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+git add . 
+```
+- Commit
+```bash
+git commit -m "feat: new feat"
+```
+- Push
+```bash
+git push -u origin BRANCH_OF_YOUR_FEATURE
+```
+- Create pull request from your branch to my repository
+- Waiting me for merging
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+
+
+
+
+
+
