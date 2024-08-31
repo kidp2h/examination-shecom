@@ -1,3 +1,4 @@
+'use server';
 import { api } from '@/services';
 import {
   BookingWithRoom,
@@ -31,5 +32,3 @@ export const bookRoom = async (
   revalidatePath('/management/dashboard');
   return result;
 };
-
-export const dynamic = 'force-dynamic';

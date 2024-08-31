@@ -1,3 +1,4 @@
+'use server';
 import { api } from '@/services';
 import { ResponseType, RoomWithBookings } from '@/types';
 
@@ -14,5 +15,3 @@ export const createRoom = async (
 ): Promise<ResponseType<RoomWithBookings>> => {
   return await api('/api/rooms', 'POST', room);
 };
-
-export const dynamic = 'force-dynamic';

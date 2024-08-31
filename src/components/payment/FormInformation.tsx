@@ -58,6 +58,7 @@ export default function FormInformation({
       checkIn,
       checkOut,
     };
+    console.log(information);
     const result = await bookRoom(information, room);
     console.log(result);
     if (result.data === null) {
