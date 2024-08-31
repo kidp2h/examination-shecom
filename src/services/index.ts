@@ -1,4 +1,4 @@
-'use server';
+// 'use server';
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH';
 export async function api(endpoint: string, method: Method, body?: any) {
   const response = fetch(process.env.URL + endpoint, {
@@ -10,3 +10,5 @@ export async function api(endpoint: string, method: Method, body?: any) {
   }).then((res) => res.json());
   return response;
 }
+
+export const dynamic = 'force-dynamic';

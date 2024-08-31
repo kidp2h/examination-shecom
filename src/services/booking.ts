@@ -1,4 +1,3 @@
-'use server';
 import { api } from '@/services';
 import {
   BookingWithRoom,
@@ -6,7 +5,6 @@ import {
   ResponseType,
   RoomWithBookings,
 } from '@/types';
-import { Room } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export const getBookings = async (): Promise<
@@ -33,3 +31,5 @@ export const bookRoom = async (
   revalidatePath('/management/dashboard');
   return result;
 };
+
+export const dynamic = 'force-dynamic';

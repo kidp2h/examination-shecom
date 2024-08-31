@@ -1,3 +1,4 @@
+'use server';
 import TableBooking from '@/components/management/TableBooking';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
