@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "dotenv -e .env -- next dev",
     "build": "prisma generate && next build",
-    "start": "next start",
+    "start": "dotenv -e .env -- next start",
     "lint": "next lint",
     "test": "dotenv -e .env.test -- prisma db push && dotenv -e .env.test -- jest --passWithNoTests --detectOpenHandles --forceExit",
     "test:watch": "dotenv -e .env.test -- jest --watch --passWithNoTests --detectOpenHandles --forceExit"
